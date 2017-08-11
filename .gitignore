@@ -1,0 +1,6 @@
+*.json
+bin/*
+.idea/*
+__pycache__/*
+lib/*
+*.cfg
