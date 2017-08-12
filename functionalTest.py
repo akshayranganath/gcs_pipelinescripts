@@ -1,15 +1,24 @@
-import requests
+# -*- coding: utf-8 -*-
 import json
 import argparse
 
 
 class FunctionalTests():
+
     def __init__(self, rulesFile, hostsFile, secure=False):
+        """
+        A slightly longer init function, this code will parse the PM property file,
+        the hosts file and then extract the following:
+        1. Host names
+        2. Edge hostnames associated with the host name
+        3. Sureroute object names
+        """
         self.filename = rulesFile
         self.hostsfile = hostsFile
         self.edgehostnames = []
         self.hostnames = []
         self.srobject = None
+        self.srForceSSL = None
         self.secure = secure
         with open(rulesFile, 'rb') as pmFile:
             self.rules = json.loads(pmFile.read())
@@ -19,25 +28,15 @@ class FunctionalTests():
         self.setSRObject()
 
     def setHostNames(self):
+        """A simple function to extract the host name and edge host name information"""
         for entry in self.hostinfo['hostnames']['items']:
             self.hostnames.append( entry['cnameFrom'] )
             self.edgehostnames.append( entry['cnameTo'] )
 
     def setSRObject(self):
+        """A shell function that will invoke a recursive call to find the sureroute object path"""
         self.findSRObject(self.rules['rules'])
 
-
-    def getEdgeHostNames(self):
-        return self.edgehostnames
-
-    def getHostNames(self):
-        return self.hostnames
-
-    def getSrObject(self):
-        pass
-
-    def parseRules(self):
-        pass
 
     # A recursive function to find the sr object behavior
     def findSRObject(self, rules):
@@ -52,7 +51,17 @@ class FunctionalTests():
 
                 if behavior['name'] == 'sureRoute':
                     self.srobject =  behavior['options']['testObjectUrl']
+                    self.srForceSSL = behavior['options']['forceSslForward']
 
+
+    def getEdgeHostNames(self):
+        return self.edgehostnames
+
+    def getHostNames(self):
+        return self.hostnames
+
+    def getSrObject(self):
+        return self.srobject
 
 if __name__ == "__main__":
     # fetch the list of arguments. we need at least 2

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/env python
 
 '''
@@ -29,7 +30,7 @@ class TestConfiguration(unittest.TestCase):
 
     # Test 4: check if SR object defined
     def test_if_sr_object_defined(self):
-        self.assertIsNotNone(self.ft.srobject)
+        self.assertIsNotNone(self.ft.getSrObject())
 
     # Test 5: check if hosts file exists
     def test_if_host_file_exists(self):
