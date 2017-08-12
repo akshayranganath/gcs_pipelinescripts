@@ -15,17 +15,16 @@ class FunctionalTests():
             self.rules = json.loads(pmFile.read())
         with open(hostsFile, 'rb') as hostsDetails:
             self.hostinfo = json.loads(hostsDetails.read())
-        self.getHostNames()
+        self.setHostNames()
+        self.setSRObject()
 
-    def getHostNames(self):
-        print ('test')
-        print ('testing ' + json.dumps(self.hostinfo['hostnames']['items'], indent=2))
+    def setHostNames(self):
         for entry in self.hostinfo['hostnames']['items']:
             self.hostnames.append( entry['cnameFrom'] )
             self.edgehostnames.append( entry['cnameTo'] )
 
-        print (self.hostnames)
-        print (self.edgehostnames)
+    def setSRObject(self):
+        self.findSRObject(self.rules['rules'])
 
 
     def getEdgeHostNames(self):
@@ -40,6 +39,20 @@ class FunctionalTests():
     def parseRules(self):
         pass
 
+    # A recursive function to find the sr object behavior
+    def findSRObject(self, rules):
+        if 'children' in rules:
+            for child in rules['children']:
+                self.findSRObject(child)
+
+        if 'behaviors' in rules:
+            for behavior in rules['behaviors']:
+                if 'children' in behavior:
+                    self.findSRObject(behavior)
+
+                if behavior['name'] == 'sureRoute':
+                    self.srobject =  behavior['options']['testObjectUrl']
+
 
 if __name__ == "__main__":
     # fetch the list of arguments. we need at least 2
@@ -52,4 +65,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ft = FunctionalTests(args.rules,args.hosts,args.secure)
-    ft.getHostNames()
