@@ -3,4 +3,6 @@ language : python
 install:
 - pip install -r requirements.txt
 
-script: python testconfiguration.py
+script:
+- python unittest/testconfiguration.py
+- python unittest/unittest_testWrapper.py
