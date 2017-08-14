@@ -36,6 +36,10 @@ class TestConfiguration(unittest.TestCase):
     def test_if_host_file_exists(self):
         self.assertTrue(os.path.isfile(self.ft.hostsfile))
 
+    # Test 6: find origin names
+    def test_if_origins_defined(self):
+        self.assertGreater( len(self.ft.getOriginDetals() ), 0)
+
     def tearDown(self):
         ft = None
 

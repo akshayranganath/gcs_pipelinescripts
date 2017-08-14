@@ -17,6 +17,7 @@ class FunctionalTests():
         self.hostsfile = hostsFile
         self.edgehostnames = []
         self.hostnames = []
+        self.origins = []
         self.srobject = None
         self.srForceSSL = None
         self.secure = secure
@@ -26,6 +27,8 @@ class FunctionalTests():
             self.hostinfo = json.loads(hostsDetails.read())
         self.setHostNames()
         self.setSRObject()
+        self.setOrigins()
+
 
     def setHostNames(self):
         """A simple function to extract the host name and edge host name information"""
@@ -37,7 +40,8 @@ class FunctionalTests():
         """A shell function that will invoke a recursive call to find the sureroute object path"""
         self.findSRObject(self.rules['rules'])
 
-
+    def setOrigins(self):
+        self.findOrigins(self.rules['rules'])
     # A recursive function to find the sr object behavior
     def findSRObject(self, rules):
         if 'children' in rules:
@@ -53,15 +57,40 @@ class FunctionalTests():
                     self.srobject =  behavior['options']['testObjectUrl']
                     self.srForceSSL = behavior['options']['forceSslForward']
 
+                    # A recursive function to find the sr object behavior
+
+    def findOrigins(self, rules):
+        if 'children' in rules:
+            for child in rules['children']:
+                self.findSRObject(child)
+
+        if 'behaviors' in rules:
+            for behavior in rules['behaviors']:
+                if 'children' in behavior:
+                    self.findSRObject(behavior)
+
+                if behavior['name'] == 'origin':
+                   origin_object = {
+                        'host': behavior['options']['hostname'],
+                        'hostHeader': behavior['options']['customForwardHostHeader'] if 'customForwardHostHeader' in behavior['options']  else  None
+                   }
+                   self.origins.append(origin_object)
+
 
     def getEdgeHostNames(self):
         return self.edgehostnames
 
+
     def getHostNames(self):
         return self.hostnames
 
+
     def getSrObject(self):
         return self.srobject
+
+
+    def getOriginDetals(self):
+        return self.origins
 
 if __name__ == "__main__":
     # fetch the list of arguments. we need at least 2
