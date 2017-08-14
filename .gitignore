@@ -1,4 +1,6 @@
-*.json
+hostinfo.json
+pip-selfcheck.json
+devopstest.gcs.com.json
 bin/*
 .idea/*
 __pycache__/*

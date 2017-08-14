@@ -1,0 +1,31 @@
+{
+    "accountId": "act_B-C-1ED34DK",
+    "contractId": "ctr_C-1ED34DY",
+    "etag": "bc2a525cb967f31542eeba55afea87abca823174",
+    "groupId": "grp_63802",
+    "hostnames": {
+        "items": [
+            {
+                "cnameFrom": "devopstest.gcs.akamai.com",
+                "cnameTo": "devopstest.gcs.akamai.com.edgekey.net",
+                "cnameType": "EDGE_HOSTNAME",
+                "edgeHostnameId": "ehn_2515696"
+            },
+            {
+                "cnameFrom": "devopstest.gcs.akamai.com.edgekey-staging.net",
+                "cnameTo": "devopstest.gcs.akamai.com.edgekey.net",
+                "cnameType": "EDGE_HOSTNAME",
+                "edgeHostnameId": "ehn_2515696"
+            },
+            {
+                "cnameFrom": "devopstest.gcs.akamai.com.edgekey.net",
+                "cnameTo": "devopstest.gcs.akamai.com.edgekey.net",
+                "cnameType": "EDGE_HOSTNAME",
+                "edgeHostnameId": "ehn_2515696"
+            }
+        ]
+    },
+    "propertyId": "prp_390824",
+    "propertyName": "devopstest.gcs.com",
+    "propertyVersion": 3
+}
