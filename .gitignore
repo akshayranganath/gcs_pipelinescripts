@@ -2,5 +2,6 @@
 bin/*
 .idea/*
 __pycache__/*
+/*/__pycache__/*
 lib/*
 *.cfg

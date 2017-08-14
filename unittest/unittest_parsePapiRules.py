@@ -6,8 +6,12 @@ This is a function to test run some basic tests on a configuration file
 '''
 
 import unittest
-from  parsePapiRules import FunctionalTests
 import os
+import sys
+
+sys.path.append('functionaltests'); sys.path.append('../functionaltests')
+from  parsePapiRules import FunctionalTests
+
 
 class TestConfiguration(unittest.TestCase):
 
