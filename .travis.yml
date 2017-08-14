@@ -4,5 +4,5 @@ install:
 - pip install -r requirements.txt
 
 script:
-- python unittest/testconfiguration.py
+- python unittest/unittest_parsePapiRules.py
 - python unittest/unittest_testWrapper.py
