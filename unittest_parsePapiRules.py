@@ -6,7 +6,7 @@ This is a function to test run some basic tests on a configuration file
 '''
 
 import unittest
-from  functionalTest import FunctionalTests
+from  parsePapiRules import FunctionalTests
 import os
 
 class TestConfiguration(unittest.TestCase):
