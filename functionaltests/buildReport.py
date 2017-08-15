@@ -4,6 +4,27 @@ from testWrapper import TestWrapper
 from parsePapiRules import FunctionalTests
 import argparse
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def printHeader(header):
+    print ()
+    print (bcolors.BOLD  + header)
+    print("-------------------------------------------------------------------------------------------" + bcolors.ENDC)
+
+def printLine(name, value):
+    if value != None and value!=False:
+        print (name + ', ' + bcolors.OKGREEN + str(value) + bcolors.ENDC)
+    else:
+        print(name + ', ' + bcolors.FAIL + str(value) + bcolors.ENDC)
+
 
 if __name__ == "__main__":
     # fetch the list of arguments. we need at least 2
@@ -20,9 +41,26 @@ if __name__ == "__main__":
     # now check if the host names exist
     wrapper = TestWrapper()
 
+    printHeader("Host Resolution Report")
     for hostname in ft.getHostNames():
-        #print (hostnamewrapper.getIPAddress(hostname))
-        print(hostname + ', ' + str( wrapper.getIPAddress(hostname) ))
+        printLine(hostname, wrapper.getIPAddress(hostname) )
 
+    printHeader("Origin Resolution Report")
+    for origin in ft.getOriginDetals():
+        printLine(origin['host'], wrapper.getIPAddress(origin['host']))
 
+    printHeader("Edge Host Names Report for host names")
+    for edgeHostName in ft.getEdgeHostNames():
+        printLine(edgeHostName ,wrapper.getIPAddress(edgeHostName))
 
+    printHeader("Host Accessibility Report - No Spoofing")
+    for hostname in ft.getHostNames():
+        printLine(hostname, wrapper.hostExists(hostname) )
+
+    printHeader("Host Accessibility with Spoofing")
+    for hostname in ft.getHostNames():
+        printLine(hostname, wrapper.hostExists(hostname, hostname, 'a1.b.akamai-staging.net' ) )
+
+    printHeader("Origin Accessibility Report")
+    for origin in ft.getOriginDetals():
+        printLine(origin['host'], wrapper.hostExists(origin['host'], origin['hostHeader']))

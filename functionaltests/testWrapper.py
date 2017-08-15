@@ -14,12 +14,24 @@ class TestWrapper:
         return result
 
 
-    def hostExists(self,host,hostHeader=None):
+    def hostExists(self,host,hostHeader=None, proxy=None):
         result = False
         try:
+            url = 'http://'
             if hostHeader==None:
                 hostHeader = host
-            response = requests.get('http://'+host+'/',{'Host':hostHeader})
+
+            headers = {
+                'Host' : hostHeader
+            }
+
+            if proxy!=None:
+                url += proxy + '/'
+                headers['Host'] = host
+            else:
+                url += host + '/'
+
+            response = requests.get(url,headers)
             result = True
         except Exception as e:
             pass
