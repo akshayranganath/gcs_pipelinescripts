@@ -45,7 +45,9 @@ class TestConfiguration(unittest.TestCase):
         self.assertGreater( len(self.ft.getOriginDetals() ), 0)
 
     def test_if_fetch_host_details_works(self):
-        self.ft.fetchHostDetails('prp_390824',str(3),'ctr_C-1ED34DY','grp_63802')
+        result = self.ft.fetchHostDetails('prp_390824',3,'ctr_C-1ED34DY','grp_63802')
+        self.assertIsNotNone(result)
+        self.assertGreater(len(result['hostnames']['items']),0)
 
     def tearDown(self):
         ft = None

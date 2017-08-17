@@ -27,15 +27,17 @@ class FunctionalTests():
             with open(hostsFile, 'r') as hostsDetails:
                 self.hostinfo = json.loads(hostsDetails.read())
         else:
-            self.hostinfo = self.fetchHostDetails()
+            self.hostinfo = self.fetchHostDetails(self.rules['propertyId'], self.rules['propertyVersion'],\
+                                                  self.rules['contractId'],self.rules['groupId'])
         self.setHostNames()
         self.setSRObject()
         self.setOrigins()
 
-    def fetchHostDetails(self, propertyId, propertyVersion,contractId,groupdId):
-        endPoint = ":/papi/v1/properties/" + propertyId + "/versions/" + propertyVersion + \
-            "/?contractId=" + contractId + "&groupId=" + groupdId
-        result = subprocess.check_output(['http','--auth','edgegrid','-a','papi:','-b',endPoint])
+    def fetchHostDetails(self, propertyId, propertyVersion,contractId,groupId):
+        endPoint = ":/papi/v1/properties/" + propertyId + "/versions/" + str(propertyVersion) + \
+            "/hostnames/?contractId=" + contractId + "&groupId=" + groupId
+        result = json.loads(subprocess.check_output(['http','--auth','edgegrid','-a','papi:','-b',endPoint]))
+        #print (json.dumps(result,indent=2))
         return result
 
 
