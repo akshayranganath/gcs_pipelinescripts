@@ -36,6 +36,7 @@ class FunctionalTests():
     def fetchHostDetails(self, propertyId, propertyVersion,contractId,groupId):
         endPoint = ":/papi/v1/properties/" + propertyId + "/versions/" + str(propertyVersion) + \
             "/hostnames/?contractId=" + contractId + "&groupId=" + groupId
+        print (endPoint)
         result = subprocess.check_output(['http','--auth','edgegrid','-a','papi:','-b',endPoint])
         print (result)
         #print (json.dumps(result,indent=2))
