@@ -44,6 +44,9 @@ class TestConfiguration(unittest.TestCase):
     def test_if_origins_defined(self):
         self.assertGreater( len(self.ft.getOriginDetals() ), 0)
 
+    def test_if_fetch_host_details_works(self):
+        self.ft.fetchHostDetails('prp_390824',str(3),'ctr_C-1ED34DY','grp_63802')
+
     def tearDown(self):
         ft = None
 

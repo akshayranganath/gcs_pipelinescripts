@@ -40,12 +40,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Simple functional testing tool using requests library")
     parser.add_argument('--rules', help="PAPI rules file that will be parsed and tested", required=True)
     parser.add_argument('--hosts', help="Host details file that will be used to extract host name and edge host names",
-                        required=True)
+                        required=False)
     parser.add_argument('--secure', help="Run all the tests as https instead of http", action="store_true")
 
     args = parser.parse_args()
 
-    ft = FunctionalTests(args.rules,args.hosts,args.secure)
+    if 'hosts' in args:
+        ft = FunctionalTests(args.rules,None,args.secure)
+    else:
+        ft = FunctionalTests(args.rules, args.hosts, args.secure)
 
     # now check if the host names exist
     wrapper = TestWrapper()

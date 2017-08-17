@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import argparse
-
+import subprocess
 
 class FunctionalTests():
 
@@ -23,11 +23,21 @@ class FunctionalTests():
         self.secure = secure
         with open(rulesFile, 'r') as pmFile:
             self.rules = json.loads(pmFile.read())
-        with open(hostsFile, 'r') as hostsDetails:
-            self.hostinfo = json.loads(hostsDetails.read())
+        if hostsFile != None:
+            with open(hostsFile, 'r') as hostsDetails:
+                self.hostinfo = json.loads(hostsDetails.read())
+        else:
+            self.hostinfo = self.fetchHostDetails()
         self.setHostNames()
         self.setSRObject()
         self.setOrigins()
+
+    def fetchHostDetails(self, propertyId, propertyVersion,contractId,groupdId):
+        endPoint = ":/papi/v1/properties/" + propertyId + "/versions/" + propertyVersion + \
+            "/?contractId=" + contractId + "&groupId=" + groupdId
+        result = subprocess.check_output(['http','--auth','edgegrid','-a','papi:','-b',endPoint])
+        return result
+
 
 
     def setHostNames(self):
@@ -42,6 +52,7 @@ class FunctionalTests():
 
     def setOrigins(self):
         self.findOrigins(self.rules['rules'])
+
     # A recursive function to find the sr object behavior
     def findSRObject(self, rules):
         if 'children' in rules:
