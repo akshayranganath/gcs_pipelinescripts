@@ -38,7 +38,7 @@ class FunctionalTests():
             "/hostnames/?contractId=" + contractId + "&groupId=" + groupId
         print (endPoint)
         result = subprocess.check_output(['http','--auth-type','edgegrid','-a','papi:','-b',endPoint])
-        print (result)
+        #print (result)
         #print (json.dumps(result,indent=2))
         return json.loads(result.decode('utf-8'))
 
