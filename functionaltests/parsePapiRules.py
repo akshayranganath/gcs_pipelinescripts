@@ -21,9 +21,9 @@ class FunctionalTests():
         self.srobject = None
         self.srForceSSL = None
         self.secure = secure
-        with open(rulesFile, 'rb') as pmFile:
+        with open(rulesFile, 'r') as pmFile:
             self.rules = json.loads(pmFile.read())
-        with open(hostsFile, 'rb') as hostsDetails:
+        with open(hostsFile, 'r') as hostsDetails:
             self.hostinfo = json.loads(hostsDetails.read())
         self.setHostNames()
         self.setSRObject()

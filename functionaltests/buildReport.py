@@ -3,6 +3,9 @@ import csv
 from testWrapper import TestWrapper
 from parsePapiRules import FunctionalTests
 import argparse
+import logging
+
+logger = None
 
 class bcolors:
     HEADER = '\033[95m'
@@ -27,6 +30,12 @@ def printLine(name, value):
 
 
 if __name__ == "__main__":
+
+    # get a logger
+    FORMAT = '%(asctime)-15s %(user)-8s %(message)s'
+    logging.basicConfig(format=FORMAT)
+    logger = logging.getLogger('FunctionalTester')
+
     # fetch the list of arguments. we need at least 2
     parser = argparse.ArgumentParser(description="Simple functional testing tool using requests library")
     parser.add_argument('--rules', help="PAPI rules file that will be parsed and tested", required=True)
