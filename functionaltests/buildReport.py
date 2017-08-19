@@ -46,9 +46,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if 'hosts' in args:
-        ft = FunctionalTests(args.rules,None,args.secure)
-    else:
         ft = FunctionalTests(args.rules, args.hosts, args.secure)
+    else:
+        ft = FunctionalTests(args.rules, None, args.secure)
 
     # now check if the host names exist
     wrapper = TestWrapper()
