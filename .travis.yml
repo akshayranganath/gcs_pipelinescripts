@@ -6,4 +6,4 @@ install:
 script:
 - cd unittest
 - nosetests -v
-- nosetests -v unittest_checkFunctionalTests.py 
+- nosetests -v unittest_checkFunctionalTests.py

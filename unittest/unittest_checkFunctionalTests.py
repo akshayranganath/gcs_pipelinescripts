@@ -35,7 +35,7 @@ class TestBasicFunctionality(unittest.TestCase):
             assert_equal(response.status_code, expected_status_code, msg=error_message)
         else:
             ttl = response.headers['X-Cache-Key'].split('/')[4]
-            assert_equal(self.expected_ttl, ttl, msg=error_message)
+            assert_equal(expected_ttl, ttl, msg=error_message)
 
 
 if __name__ == "__main__":
