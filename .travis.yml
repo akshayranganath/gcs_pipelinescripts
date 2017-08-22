@@ -5,5 +5,5 @@ install:
 
 script:
 - cd unittest
-- python unittest_parsePapiRules.py
-- python unittest_testWrapper.py
+- nosetests -v
+- nosetests -v unittest_checkFunctionalTests.py 
