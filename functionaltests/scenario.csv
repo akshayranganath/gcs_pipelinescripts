@@ -1,0 +1,9 @@
+URL,Response Code, TTL, Result String
+/,200,,Home page - Response code failed
+/men.html, 200,,Category page - Response code failed
+/men/new-arrivals.html,200,,Sub-cat page - Response code failed
+/men/new-arrivals/linen-blazer.html,200,,PDP - Response code failed
+/,,30d,Home page - cache test failed
+/men.html,,30d,Category page - cache test failed
+/men/new-arrivals.html,,30d,Sub-cat page - cache test failed
+/men/new-arrivals/linen-blazer.html,,7d,PDP - cache test failed

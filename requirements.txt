@@ -1,5 +1,15 @@
+asn1crypto==0.22.0
 certifi==2017.7.27.1
+cffi==1.10.0
 chardet==3.0.4
+cryptography==2.0.3
+edgegrid-python==1.0.10
 idna==2.5
+ndg-httpsclient==0.4.2
+py==1.4.34
+pyasn1==0.3.2
+pycparser==2.18
+pyOpenSSL==17.2.0
 requests==2.18.3
+six==1.10.0
 urllib3==1.22
