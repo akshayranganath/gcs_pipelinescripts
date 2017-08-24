@@ -13,3 +13,6 @@ Here's an index of the scripts that are part of the repository.
 To run the scripts, please use _python3_.
 
 If you are running in a virtual environment, please refer to the __requiements.txt__ necessary for the depencies.
+
+## Travis Integration
+For show-casing a Green/Red build, I've added a ```.travis.yml``` file as well.
