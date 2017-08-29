@@ -5,6 +5,7 @@ import unittest
 from nose.tools import assert_equal
 from parameterized import parameterized
 import requests
+import os
 
 
 class TestBasicFunctionality(unittest.TestCase):
@@ -19,6 +20,9 @@ class TestBasicFunctionality(unittest.TestCase):
             "Pragma": "akamai-x-get-cache-key"
         }
 
+    def test_check_if_base_domain_defined(self):
+        self.assertIn('DOMAIN',os.environ)
+
     @parameterized.expand([
         ("/", 200, None, "Home page - Response code failed"),
         ("/men.html", 200, None, "Category page - Response code failed"),
@@ -30,12 +34,13 @@ class TestBasicFunctionality(unittest.TestCase):
         ("/men/new-arrivals/linen-blazer.html", None, "7d", "PDP - cache test failed")
     ])
     def test_request_status_code(self,url, expected_status_code, expected_ttl, error_message):
-        response = requests.get('http://devopstest.gcs.akamai.com.edgekey-staging.net'+url, headers=self.headers)
-        if expected_status_code != None:
-            assert_equal(response.status_code, expected_status_code, msg=error_message)
-        else:
-            ttl = response.headers['X-Cache-Key'].split('/')[4]
-            assert_equal(expected_ttl, ttl, msg=error_message)
+        if 'DOMAIN' in os.environ:
+            response = requests.get('http://' + os.environ['DOMAIN']+ url, headers=self.headers)
+            if expected_status_code != None:
+                assert_equal(response.status_code, expected_status_code, msg=error_message)
+            else:
+                ttl = response.headers['X-Cache-Key'].split('/')[4]
+                assert_equal(expected_ttl, ttl, msg=error_message)
 
 
 if __name__ == "__main__":
