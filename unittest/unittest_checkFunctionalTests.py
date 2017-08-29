@@ -28,10 +28,10 @@ class TestBasicFunctionality(unittest.TestCase):
         ("/men.html", 200, None, "Category page - Response code failed"),
         ("/men/new-arrivals.html", 200, None, "Sub-cat page - Response code failed"),
         ("/men/new-arrivals/linen-blazer.html", 200, None, "PDP - Response code failed"),
-        ("/",None,"30d","Home page - cache test failed"),
-        ("/men.html", None, "30d", "Category page - cache test failed"),
-        ("/men/new-arrivals.html", None, "30d", "Sub-cat page - cache test failed"),
-        ("/men/new-arrivals/linen-blazer.html", None, "7d", "PDP - cache test failed")
+        ("/",None,"000","Home page - cache test failed"),
+        ("/men.html", None, "000", "Category page - cache test failed"),
+        ("/men/new-arrivals.html", None, "000", "Sub-cat page - cache test failed"),
+        ("/men/new-arrivals/linen-blazer.html", None, "000", "PDP - cache test failed")
     ])
     def test_request_status_code(self,url, expected_status_code, expected_ttl, error_message):
         if 'DOMAIN' in os.environ:
