@@ -17,7 +17,14 @@ class TestConfiguration(unittest.TestCase):
 
     def setUp(self):
         #first create an instance of the functional test
-        self.ft = FunctionalTests('rules.json','hostinfo.json')
+        rulesFile = 'rules.json'
+        hostFile = 'hostinfo.json'
+
+        if 'rulesFile' in os.environ:
+            rulesFile = os.environ['rulesFile']
+        if 'hostFile' in os.environ:
+            hostFile = os.environ['hostFile']
+        self.ft = FunctionalTests(rulesFile, hostFile)
 
 
     # Test 1: check if the rules file even exists
