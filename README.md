@@ -17,4 +17,3 @@ If you are running in a virtual environment, please refer to the __requiements.t
 ## Travis Integration
 For show-casing a Green/Red build, I've added a ```.travis.yml``` file as well.
 
-Adding a ling to test jenkins build
