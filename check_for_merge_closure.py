@@ -5,7 +5,7 @@ import logging
 FORMAT = '%(asctime)-15s %(levelname)s: %(message)s'
 logging.basicConfig(format=FORMAT)
 #logging.basicConfig()
-logger = logging.getLogger('filecleaner')
+logger = logging.getLogger('gcs_pipeline')
 logger.setLevel(logging.DEBUG)
 
 merge_request = False
@@ -17,9 +17,8 @@ if 'action' in payload and payload['action']=='closed':
 	if 'pull_request' in payload and 'merged_at' in payload['pull_request']:
 		logger.debug('Found a merged_at within a pull_request')
 		merge_request = True
-try:
-	assert merge_request==True
+if merge_request == True:	
 	logger.info('Found a successful merge request.')
-except AssertionError:
+else:
 	logger.info('Merge request was not found.')
-	raise AssertionError
+assert merge_request
