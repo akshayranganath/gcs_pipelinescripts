@@ -6,7 +6,7 @@ FORMAT = '%(asctime)-15s %(levelname)s: %(message)s'
 logging.basicConfig(format=FORMAT)
 #logging.basicConfig()
 logger = logging.getLogger('gcs_pipeline')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 merge_request = False
 raw_data = sys.stdin.read()
