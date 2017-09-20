@@ -45,7 +45,7 @@ class TestBasicFunctionality(unittest.TestCase):
         logger = logging.getLogger('unittest')
         if 'DOMAIN' in os.environ:
             self.headers['Host'] = os.environ['DOMAIN']
-            response = requests.get('http://a1652.dscq.akamai-staging.net'+ url, headers=self.headers)
+            response = requests.get('http://" + os.environ['DOMAIN'] +".edgesuite-staging.net'+ url, headers=self.headers)
 
             if expected_status_code != None:
                 assert_equal(response.status_code, expected_status_code, msg=error_message)
