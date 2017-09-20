@@ -6,6 +6,7 @@ from nose.tools import assert_equal
 from parameterized import parameterized
 import requests
 import os
+import logging
 
 
 class TestBasicFunctionality(unittest.TestCase):
@@ -20,8 +21,14 @@ class TestBasicFunctionality(unittest.TestCase):
             "Pragma": "akamai-x-get-cache-key"
         }
 
+        # logging.basicConfig()
+
     def test_check_if_base_domain_defined(self):
+        logger = logging.getLogger('unittest')
         self.assertIn('DOMAIN',os.environ)
+        if 'DOMAIN' in os.environ:
+            logger.info("Environment variable DOMAIN is defined.")
+            logger.info("Fetching with headers: " + str(self.headers))
 
     @parameterized.expand([
         ("/", 200, None, "Home page - Response code failed"),
@@ -34,9 +41,11 @@ class TestBasicFunctionality(unittest.TestCase):
         ("/desktops/mac/imac", None, "000", "PDP - cache test failed")
     ])
     def test_request_status_code(self,url, expected_status_code, expected_ttl, error_message):
+        logger = logging.getLogger('unittest')
         if 'DOMAIN' in os.environ:
             self.headers['Host'] = os.environ['DOMAIN']
             response = requests.get('http://a1.b.akamai-staging.net'+ url, headers=self.headers)
+
             if expected_status_code != None:
                 assert_equal(response.status_code, expected_status_code, msg=error_message)
             else:
@@ -45,4 +54,7 @@ class TestBasicFunctionality(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    FORMAT = '%(asctime)s %(message)s'
+    logging.basicConfig(format=FORMAT)
+    logging.getLogger('unittest').setLevel(logging.DEBUG)
     unittest.main()
