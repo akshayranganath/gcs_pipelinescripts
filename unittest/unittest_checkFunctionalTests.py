@@ -45,7 +45,12 @@ class TestBasicFunctionality(unittest.TestCase):
         logger = logging.getLogger('unittest')
         if 'DOMAIN' in os.environ:
             self.headers['Host'] = os.environ['DOMAIN']
-            response = requests.get("http://" + os.environ['DOMAIN'] + ".edgesuite-staging.net" + url, headers=self.headers)
+            url = "http://" + os.environ['DOMAIN'] + ".edgesuite-staging.net" + url
+            response = requests.get(url, headers=self.headers)
+            logger.debug("Fetching URL: " + url)
+            logger.debug("Using headers: " + str(self.headers) )
+            logger.debug("Response status: " + str(response.status_code))
+            logger.debug("Response headers: " + str(response.headers) )
 
             if expected_status_code != None:
                 assert_equal(response.status_code, expected_status_code, msg=error_message)
