@@ -28,6 +28,7 @@ class TestBasicFunctionality(unittest.TestCase):
         self.assertIn('DOMAIN',os.environ)
         if 'DOMAIN' in os.environ:
             logger.info("Environment variable DOMAIN is defined.")
+            logger.info("DOMAIN="+os.environ['DOMAIN'])
             logger.info("Fetching with headers: " + str(self.headers))
 
     @parameterized.expand([
