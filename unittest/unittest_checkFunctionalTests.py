@@ -36,7 +36,7 @@ class TestBasicFunctionality(unittest.TestCase):
         ("/desktops", 200, None, "Category page - Response code failed"),
         ("/desktops/mac", 200, None, "Sub-cat page - Response code failed"),
         ("/desktops/mac/imac", 200, None, "PDP - Response code failed"),
-        ("/",None,"000","Home page - cache test failed"),
+        ("/",None,"0s","Home page - cache test failed"),
         ("/desktops", None, "000", "Category page - cache test failed"),
         ("/desktops/mac", None, "000", "Sub-cat page - cache test failed"),
         ("/desktops/mac/imac", None, "000", "PDP - cache test failed")
