@@ -78,9 +78,17 @@ def getApiResponse(token, args):
 		arguments['type'] = "summary"
 
 	function = '/' + arguments['type']
-	query_arguments = {"format": "json", "timer": args.timer}
-
-	query_arguments = mpulse_helper.get_query_date(arguments, query_arguments)
+	
+	query_arguments = mpulse_helper.get_query_date(arguments)
+	query_arguments['format'] = 'json'
+	#now remove the 'type' dictionary entry
+	arguments.pop('type', None)
+	arguments.pop('date-comparator', None)
+	arguments.pop('date', None)
+	arguments.pop('startdate', None)
+	arguments.pop('enddate', None)	
+	query_arguments.update(arguments)
+	logger.debug("Arguments currently in list: " + str(query_arguments))
 	headers = {"Authentication": token["token"]}
 	api_endpoint = base_url + args.api_key + function + "?" + "&".join(mpulse_helper.build_query_string(query_arguments))
 	
