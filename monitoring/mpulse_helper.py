@@ -17,3 +17,11 @@ def get_query_date(arguments):
 			if 'date-compartor' in arguments['date-comparator']:
 				query_arguments['date-comparator'] = arguments['date-comparator']
 	return query_arguments
+
+def cleanup_arguments(arguments):
+	arguments.pop('type', None)
+	arguments.pop('date-comparator', None)
+	arguments.pop('date', None)
+	arguments.pop('startdate', None)
+	arguments.pop('enddate', None)
+	return arguments
