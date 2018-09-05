@@ -1,3 +1,6 @@
+'''
+Provides a CLI-like functionality for the mPulse Query API
+'''
 import sys
 import config
 if sys.version_info[0] >= 3:
@@ -21,53 +24,14 @@ logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
 
 
-def getSummary(token, api_key, timer, arguments):
-	base_url = "https://mpulse.soasta.com/concerto/mpulse/api/v2/"
-	function = "/summary"
-	query_arguments = {"format": "json", "timer": timer}
-	
-	query_arguments = mpulse_helper.get_query_date(arguments, query_arguments)
-	
-	headers = {"Authentication": token["token"]}
-	api_endpoint = base_url + api_key + function + "?" + "&".join(mpulse_helper.build_query_string(query_arguments))
-	logging.debug("API URL: " + api_endpoint)
-	response = {}
-
-	try:
-		response = requests.get(api_endpoint, headers = headers)
-		if response.status_code == 200:
-			logger.info(json.dumps(response.json(),indent=2))	
-			response = response.json()		
-	except Exception as e:
-		logging.error(str(e))
-	
-	return response
-
-def getHistogram(token, api_key, timer, arguments):
-	base_url = "https://mpulse.soasta.com/concerto/mpulse/api/v2/"
-	function = "/histogram"
-	query_arguments = {"format": "json", "timer": timer}
-
-	query_arguments = mpulse_helper.get_query_date(arguments, query_arguments)
-	headers = {"Authentication": token["token"]}
-	api_endpoint = base_url + api_key + function + "?" + "&".join(mpulse_helper.build_query_string(query_arguments))
-	
-	logging.debug("API URL: " + api_endpoint)
-	response = {}
-
-	try:
-		response = requests.get(api_endpoint, headers = headers)
-		if response.status_code == 200:
-			logger.info(json.dumps(response.json(),indent=2))	
-			response = response.json()		
-	except Exception as e:
-		logging.error(str(e))
-	
-	return response	
-
 def getApiResponse(token, args):
+	'''
+		Single wrapper for all the calls for mPulse Query API.
+		It takes the security token and the incoming arguments and the output is a JSON response.
+	'''
 	base_url = "https://mpulse.soasta.com/concerto/mpulse/api/v2/"
 
+	# extract arguments from the command line, including the command type
 	arguments = {}
 	if 'args' in args and args.args != None or args.args!="":		
 		for each_argument in args.args:
@@ -81,16 +45,23 @@ def getApiResponse(token, args):
 	
 	query_arguments = mpulse_helper.get_query_date(arguments)
 	query_arguments['format'] = 'json'
-	#now remove the 'type' dictionary entry
+	
+	# cleanup the list of "arguments" to remove the ones we already used
 	mpulse_helper.cleanup_arguments(arguments)	
-	query_arguments.update(arguments)
+	#merge the arguments dictionary to query_arguments dictionary. we'll use 'query_arguments' to build the final set of query strings
+	query_arguments.update(arguments)	
 	logger.debug("Arguments currently in list: " + str(query_arguments))
+
+	# add the necessary auth token header
 	headers = {"Authentication": token["token"]}
+
+	#build the final api endpoint
 	api_endpoint = base_url + args.api_key + function + "?" + "&".join(mpulse_helper.build_query_string(query_arguments))
 	
 	logging.debug("API URL: " + api_endpoint)
 	response = {}
 
+	#make the call and send back the response
 	try:
 		response = requests.get(api_endpoint, headers = headers)
 		if response.status_code == 200:
@@ -100,7 +71,6 @@ def getApiResponse(token, args):
 		logging.error(str(e))
 	
 	return response		
-
 
 if __name__=="__main__":    
 
@@ -116,8 +86,10 @@ if __name__=="__main__":
     logger.debug('Configuration file: ' + args.config)
     logger.debug('Configuration section: ' + args.section)
     logger.debug(args)
-    settings = config.getCredentials(args.config,args.section)
-    token = config.generateToken(settings['apitoken'], settings['tenant'])
+
+    ## first create a security token
+    token = config.getToken(args.config,args.section)    
     logger.debug(token)
-    getApiResponse(token, args)
-    #getSummary(token, args.api_key, args.timer)
+
+    ## now fire the API call
+    getApiResponse(token, args)    

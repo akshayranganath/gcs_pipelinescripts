@@ -55,7 +55,13 @@ def generateToken(apitoken, tenant):
         logger.info("received the token: " + json.dumps(security_token))
     return security_token
 
-
+def getToken(config_file, section):
+    '''
+        Takes the apitoken and tenant as input parameter and responds back with a security token that is created.
+    '''
+    settings = getCredentials(config_file, section)
+    token = generateToken(settings['apitoken'], settings['tenant'])
+    return token
 
 if __name__=="__main__":    
 
