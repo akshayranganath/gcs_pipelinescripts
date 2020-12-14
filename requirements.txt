@@ -16,7 +16,7 @@ packaging==16.8
 parameterized==0.6.1
 parse==1.8.2
 parse-type==0.3.4
-py==1.4.34
+py==1.10.0
 pyasn1==0.2.3
 pycparser==2.17
 pyOpenSSL==17.0.0
